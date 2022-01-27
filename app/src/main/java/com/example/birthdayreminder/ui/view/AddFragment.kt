@@ -1,4 +1,4 @@
-//package com.example.birthdayreminder.view
+//package com.example.birthdayreminder.ui.view
 //
 //import android.os.Bundle
 //import android.view.LayoutInflater
