@@ -3,7 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/layout/activity_add_birthday.xml" value="0.4036458333333333" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1894630192502533" />
+        <entry key="app/src/main/res/layout/fragment_list_birthday.xml" value="0.23020833333333332" />
+        <entry key="app/src/main/res/layout/item_birthday.xml" value="0.23020833333333332" />
       </map>
     </option>
   </component>
