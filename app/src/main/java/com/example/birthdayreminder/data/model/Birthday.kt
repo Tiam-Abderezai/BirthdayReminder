@@ -1,4 +1,11 @@
 package com.example.birthdayreminder.data.model
 
-class Birthday {
+import java.util.*
+
+data class Birthday(
+    val name: String,
+    val DOB: Date,
+    val notifyDate: Date,
+    val notifyTime: Long
+    ) {
 }
