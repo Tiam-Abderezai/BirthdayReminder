@@ -1,18 +1,26 @@
 package com.example.birthdayreminder.ui.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.birthdayreminder.data.model.Birthday
 import com.example.birthdayreminder.databinding.FragmentListBinding
+import com.example.birthdayreminder.ui.adapter.BirthdayAdapter
+import java.util.*
 
 class ListFragment : Fragment() {
     private val TAG = "ListFragment"
 
     lateinit var _binding: FragmentListBinding
-//    private val newsViewModel: NewsViewModel by activityViewModels()
-//    private val newsAdapter by lazy { ArticleAdapter() }
+
+    //    private val newsViewModel: NewsViewModel by activityViewModels()
+    private var birthdays = mutableListOf<Birthday>()
+    private val birthdayAdapter by lazy { BirthdayAdapter() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -20,57 +28,39 @@ class ListFragment : Fragment() {
     ): View {
         _binding = FragmentListBinding.inflate(inflater, container, false)
         initUI()
-        initAPI()
         return _binding.root
     }
 
     fun initUI() {
+        val dummyDate = Date()
+        val b1 = Birthday("John", dummyDate, dummyDate, 0)
+        val b2 = Birthday("Sarah", dummyDate, dummyDate, 0)
+        val b3 = Birthday("Elsa", dummyDate, dummyDate, 0)
+        birthdays = mutableListOf(b1,b2,b3)
+
+        birthdayAdapter.apply {
+            Log.d(TAG, "renderList: ${birthdays.size}")
+            addData(birthdays)
+            Log.d(TAG, "renderList: ${birthdays.size}")
+//            birthdays?.let { addData(it) }
+        }
+
         _binding.apply {
 //            toolbarTitle.text =
             recyclerView.apply {
                 layoutManager = LinearLayoutManager(requireContext())
-                adapter = newsAdapter
+                adapter = birthdayAdapter
                 addItemDecoration(
                     DividerItemDecoration(
                         context,
                         (layoutManager as LinearLayoutManager).orientation
                     )
                 )
-
-            }
-        }
-
-    }
-
-    private fun initAPI() {
-        newsViewModel.fetchNews(BuildConfig.API_KEY)
-            .observe(viewLifecycleOwner) {
-                when (it.status) {
-                    Status.SUCCESS -> {
-                        Log.i(TAG, "Success: ${it}")
-//                    binding.progressBar.visibility = View.INVISIBLE
-                        it.data?.let { usersData -> renderList(usersData) }
-//                        binding.recyclerView.visibility = View.INVISIBLE
-                    }
-                    Status.LOADING -> {
-                        Log.i(TAG, "Loading: ${it.message}")
-//                    binding.progressBar.visibility = View.INVISIBLE
-//                        binding.recyclerView.visibility = View.INVISIBLE
-                    }
-                    Status.ERROR -> {
-                        //Handle Error
-                        Log.d(TAG, "Error: ${it.message}")
-//                    binding.progressBar.visibility = View.INVISIBLE
-                        Toast.makeText(context, it.message, Toast.LENGTH_LONG).show()
-                    }
+                adapter?.apply {
+                    notifyDataSetChanged()
                 }
             }
-    }
-
-    private fun renderList(articles: Response<NewsResponse>) {
-        newsAdapter.apply {
-            Log.d(TAG, "renderList: ${articles.body()?.articles?.size}")
-            articles.body()?.articles?.let { addData(it) }
         }
+
     }
 }
