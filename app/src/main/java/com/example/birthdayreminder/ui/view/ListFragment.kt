@@ -6,8 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.birthdayreminder.R
 import com.example.birthdayreminder.data.model.Birthday
 import com.example.birthdayreminder.databinding.FragmentListBinding
 import com.example.birthdayreminder.ui.adapter.BirthdayAdapter
@@ -59,6 +61,9 @@ class ListFragment : Fragment() {
                 adapter?.apply {
                     notifyDataSetChanged()
                 }
+            }
+            addNewBirthday.setOnClickListener {
+                findNavController().navigate(R.id.action_listFragment_to_addFragment)
             }
         }
 
